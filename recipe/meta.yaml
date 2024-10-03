@@ -1,5 +1,5 @@
 {% set name = "opendebugad7" %}
-{% set version = "1.19.1" %}
+{% set version = "1.19.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/microsoft/MIEngine/archive/v{{ version }}.tar.gz
-  sha256: 2ccda6fd737f76519265752265ade8217a742f528f45a0033df2b9cabf0de9d4
+  sha256: d900ab97f628229024c4b1db9734acef7c6eb7c80118cd134f4a7d194a44298d
 
 build:
   noarch: generic
