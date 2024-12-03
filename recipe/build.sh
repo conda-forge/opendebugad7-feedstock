@@ -2,7 +2,9 @@
 
 set -o xtrace -o nounset -o pipefail -o errexit
 
+mkdir -p ${PREFIX}/bin
 mkdir -p ${PREFIX}/libexec/${PKG_NAME}
+ln -sf ${DOTNET_ROOT}/dotnet ${PREFIX}/bin
 
 # Override hardcoded .NET versions
 framework_version="$(dotnet --version | sed -e 's/\..*//g').0"
@@ -16,13 +18,12 @@ dotnet build ${SRC_DIR}/src/MIDebugEngine-Unix.sln --configuration Release
 dotnet publish --no-self-contained ${SRC_DIR}/src/OpenDebugAD7/OpenDebugAD7.csproj --configuration Release --output ${PREFIX}/libexec/${PKG_NAME}
 rm -rf ${PREFIX}/libexec/opendebugad7/OpenDebugAD7
 
-mkdir -p ${PREFIX}/bin
-
 # Create bash and batch wrappers
 tee ${PREFIX}/bin/OpenDebugAD7 << EOF
 #!/bin/sh
 exec \${DOTNET_ROOT}/dotnet exec \${CONDA_PREFIX}/libexec/opendebugad7/OpenDebugAD7.dll "\$@"
 EOF
+chmod +x ${PREFIX}/bin/OpenDebugAD7
 
 tee ${PREFIX}/bin/OpenDebugAD7.cmd << EOF
 call %DOTNET_ROOT%\dotnet exec %CONDA_PREFIX%\libexec\opendebugad7\OpenDebugAD7.dll %*
