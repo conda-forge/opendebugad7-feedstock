@@ -35,3 +35,5 @@ tee ignored_packages.json << EOF
 EOF
 
 dotnet-project-licenses --input ${SRC_DIR}/src/OpenDebugAD7/OpenDebugAD7.csproj -t -d license-files -ignore ignored_packages.json
+
+rm ${PREFIX}/bin/dotnet
